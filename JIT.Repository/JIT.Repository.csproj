@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200122103551_ChangedUserIdProperty.cs" />
+    <Compile Remove="Migrations\20200122103551_ChangedUserIdProperty.Designer.cs" />
+    <Compile Remove="Migrations\20200122103752_ChangedUserIdProperty.cs" />
+    <Compile Remove="Migrations\20200122103752_ChangedUserIdProperty.Designer.cs" />
+    <Compile Remove="Migrations\20200122104311_UserModel.cs" />
+    <Compile Remove="Migrations\20200122104311_UserModel.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JIT.Core\JIT.Core.csproj" />
+  </ItemGroup>
+
+</Project>
