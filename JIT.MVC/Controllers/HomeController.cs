@@ -22,23 +22,7 @@ namespace JIT.MVC.Controllers
             _logger = logger;
         }
 
-        public IActionResult Authenticate(string username)
-        {
-            var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Name, username),
-            };
-            var userIdentity = new ClaimsIdentity(claims, "User Identity");
 
-            var userPrincipal = new ClaimsPrincipal(new[] { userIdentity });
-
-            HttpContext.SignInAsync(userPrincipal);
-
-            return RedirectToAction("Index");
-        }
-
-
-        [Authorize]
         public IActionResult Index()
         {
             return View();

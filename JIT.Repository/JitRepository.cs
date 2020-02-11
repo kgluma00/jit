@@ -23,6 +23,11 @@ namespace JIT.Repository
             _context.Remove(user);
         }
 
+        public async Task<ICollection<Project>> GetAllProjectsByUserId(int userId)
+        {
+            return await _context.Projects.Where(i => i.Id == userId).ToListAsync();
+        }
+
         public async Task<ICollection<User>> GetAllUsers()
         {
             return await _context.Users.ToListAsync();
@@ -50,6 +55,13 @@ namespace JIT.Repository
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;
+        }
+
+        public async Task<Project> SaveNewProject(Project project)
+        {
+            await _context.Projects.AddAsync(project);
+            await _context.SaveChangesAsync();
+            return project;
         }
 
         public void Update(User user)

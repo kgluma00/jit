@@ -7,6 +7,7 @@ using JIT.Business.DI;
 using JIT.Business.Interfaces;
 using JIT.Business.Services;
 using JIT.Core.Interfaces;
+using JIT.MVC.Helpers;
 using JIT.MVC.Mappings;
 using JIT.Repository;
 using JIT.Repository.DI;
@@ -43,6 +44,7 @@ namespace JIT.MVC
                 });
 
             services.AddControllersWithViews();
+            services.AddSingleton<AuthenticateUser>();
             services.AddMvc()
                 .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
             services.AddDbContext<JitContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("JITConnectionString")));

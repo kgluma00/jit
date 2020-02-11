@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using JIT.Business.Interfaces;
 using JIT.Core.DTOs;
+using JIT.MVC.Helpers;
 using JIT.MVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -16,29 +17,37 @@ namespace JIT.MVC.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IJitService _jitService;
+        private readonly AuthenticateUser _authenticateUser;
 
-        public UserController(IMapper mapper, IJitService jitService)
+        public UserController(IMapper mapper, IJitService jitService, AuthenticateUser authenticateUser)
         {
             _mapper = mapper;
             _jitService = jitService;
+            _authenticateUser = authenticateUser;
         }
 
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
+        [HttpPost]
         public async Task<IActionResult> LoginUser(UserViewModel user)
         {
             var loggedUser = await _jitService.Login(_mapper.Map<UserViewModel, UserDto>(user));
-            return loggedUser == null ? RedirectToAction("Register") : RedirectToAction("Authenticate", "Home", new { username = user.Username});
+            _authenticateUser.LoggedUserId = loggedUser.Id;
+
+            return loggedUser == null ? RedirectToAction("Register") : RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
+        [HttpPost]
         public async Task<IActionResult> RegisterNew(UserViewModel user)
         {
             if (!ModelState.IsValid) return View();
@@ -60,9 +69,37 @@ namespace JIT.MVC.Controllers
             return RedirectToAction("Login");
         }
 
-        public IActionResult UserHours(int id)
+        [HttpGet]
+        public IActionResult Hours()
         {
-            return View(id);
+            //ovo treba doraditi
+            if (_authenticateUser.LoggedUserId <= 0 || _authenticateUser.LoggedUserId > 10)
+                return RedirectToAction("Index", "Home");
+            ViewData["UserId"] = _authenticateUser.LoggedUserId;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveHours(ProjectViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            await _jitService.SaveNewProject(_mapper.Map<ProjectViewModel, ProjectDto>(model));
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> List()
+        {
+            if (_authenticateUser.LoggedUserId == 0)
+                return RedirectToAction("Index", "Home");
+            var projectsFromDb = await _jitService.GetAllProjectsByUserId(_authenticateUser.LoggedUserId);
+
+            return View(_mapper.Map<ICollection<ProjectDto>, ICollection<ProjectViewModel>>(projectsFromDb));
         }
     }
 }

@@ -118,5 +118,17 @@ namespace JIT.Business.Services
         {
             return await _jitRepository.GetUserByUsername(user.Username);
         }
+
+        public async Task<Project> SaveNewProject(ProjectDto project)
+        {
+            return await _jitRepository.SaveNewProject(_mapper.Map<ProjectDto, Project>(project));
+        }
+
+        public async Task<ICollection<ProjectDto>> GetAllProjectsByUserId(int userId)
+        {
+            var projectsFromDb = await _jitRepository.GetAllProjectsByUserId(userId);
+
+            return _mapper.Map<ICollection<Project>, ICollection<ProjectDto>>(projectsFromDb);
+        }
     }
 }

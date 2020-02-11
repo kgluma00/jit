@@ -13,8 +13,9 @@ namespace JIT.Core.Interfaces
         Task<User> GetUserByUsername(string username);
         Task<User> Register(User user);
         Task<bool> UserExists(string username);
+        Task<ICollection<Project>> GetAllProjectsByUserId(int userId);
         void Update(User user);
         void Delete(User user);
-
+        Task<Project> SaveNewProject(Project project);
     }
 }
