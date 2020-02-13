@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JIT.Business", "JIT.Busines
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{50984CBF-1973-4D39-983B-726BE5C6885D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JIT.MVC", "JIT.MVC\JIT.MVC.csproj", "{53EE20FB-B848-472D-AF27-E0D0FD2643BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JIT.MVC", "JIT.MVC\JIT.MVC.csproj", "{53EE20FB-B848-472D-AF27-E0D0FD2643BC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07FB46ED-31EE-444F-8B6E-682CBE5CC387}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

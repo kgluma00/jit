@@ -6,9 +6,9 @@
 
 <input hidden asp-for="@ViewData["UserId"]" class="form-control" />
 
-<h1>Hours</h1>
+<h1>Please add your working hours</h1>
 
-<h4>ProjectViewModel</h4>
+<h6>Fill the form</h6>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -30,7 +30,7 @@
                 <span asp-validation-for="WorkingHours" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" onclick="ValidateInput()" value="Create" class="btn btn-primary" />
             </div>
             <input hidden asp-for="UserId" value="@ViewData["UserId"]" class="form-control" />
         </form>
@@ -43,4 +43,34 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        function ValidateInput() {
+            var projectName = document.getElementById("ProjectName").value;
+            var workingDate = document.getElementById("WorkingDate").value;
+            var workingHours = document.getElementById("WorkingHours").value;
+
+            if (projectName != "" && workingDate != "" && workingHours != "" ) {
+                swal({
+                    title: "Good job!",
+                    text: "You have added your hours",
+                    icon: "success",
+                    button: "Close",
+                })
+                return true;
+            }
+            else
+            {
+                swal({
+                    title: "Error",
+                    text: "All fields are mandatory",
+                    icon: "error",
+                    button: "Close",
+                })
+                return false;
+            }
+        }
+    </script>
+
 }

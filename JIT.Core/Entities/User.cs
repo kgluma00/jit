@@ -19,6 +19,8 @@ namespace JIT.Core.Entities
         public byte[] PasswordSalt { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
+        [Required]
+        public bool IsAdmin { get; set; }
         public Project Project { get; set; }
 
     }

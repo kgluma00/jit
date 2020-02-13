@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using JIT.Business.DI;
 using JIT.Business.Interfaces;
 using JIT.Business.Services;
@@ -48,6 +50,7 @@ namespace JIT.MVC
             services.AddMvc()
                 .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
             services.AddDbContext<JitContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("JITConnectionString")));
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
             var config = new AutoMapper.MapperConfiguration(cfg =>
             {

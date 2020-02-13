@@ -23,9 +23,14 @@ namespace JIT.Repository
             _context.Remove(user);
         }
 
+        public async Task<ICollection<Project>> GetAllProjectsBetweenDates(int userId, DateTime startDate, DateTime endDate)
+        {
+            return await _context.Projects.Where(p => p.UserId == userId && p.WorkingDate >= startDate && p.WorkingDate < endDate).ToListAsync();
+        }
+
         public async Task<ICollection<Project>> GetAllProjectsByUserId(int userId)
         {
-            return await _context.Projects.Where(i => i.Id == userId).ToListAsync();
+            return await _context.Projects.Where(i => i.UserId == userId).ToListAsync();
         }
 
         public async Task<ICollection<User>> GetAllUsers()

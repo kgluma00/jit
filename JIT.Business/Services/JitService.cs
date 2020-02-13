@@ -130,5 +130,12 @@ namespace JIT.Business.Services
 
             return _mapper.Map<ICollection<Project>, ICollection<ProjectDto>>(projectsFromDb);
         }
+
+        public async Task<ICollection<ProjectDto>> GetAllProjectsBetweenDates(int userId, DateTime startDate, DateTime endDate)
+        {
+            var projectsFromDb = await _jitRepository.GetAllProjectsBetweenDates(userId, startDate, endDate);
+
+            return _mapper.Map<ICollection<Project>, ICollection<ProjectDto>>(projectsFromDb);
+        }
     }
 }

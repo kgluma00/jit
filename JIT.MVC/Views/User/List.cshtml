@@ -25,26 +25,67 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WorkingDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WorkingHours)
-            </td>
-            <td>
-                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-                <a class="btn btn-primary text-white" asp-area="" asp-controller="User" asp-action="List">Edit</a>
-                <a class="btn btn-info text-white" asp-area="" asp-controller="User" asp-action="List">Details</a>
-                <a class="btn btn-danger text-white" asp-area="" asp-controller="User" asp-action="List">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkingDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkingHours)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                    <a class="btn btn-primary text-white" asp-area="" asp-controller="User" asp-action="List">Edit</a>
+                    <a class="btn btn-info text-white" asp-area="" asp-controller="User" asp-action="List">Details</a>
+                    <a class="btn btn-danger text-white" asp-area="" asp-controller="User" asp-action="List">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalCenter">
+    Export to PDF
+</button>
+
+
+
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Please select dates</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-action="CreatePDF">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <label for="dateofbirth">Start date</label>
+                            <input type="date" name="startDate" id="startDate">
+                        </div>
+                        <div class="col">
+                            <label for="dateofbirth">End date</label>
+                            <input type="date" name="endDate" id="endDate">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning text-white">Export</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -28,6 +28,12 @@ namespace JIT.MVC.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult NotFound()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

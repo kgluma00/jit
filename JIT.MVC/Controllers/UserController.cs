@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using JIT.Business.Interfaces;
 using JIT.Core.DTOs;
 using JIT.MVC.Helpers;
@@ -18,12 +21,14 @@ namespace JIT.MVC.Controllers
         private readonly IMapper _mapper;
         private readonly IJitService _jitService;
         private readonly AuthenticateUser _authenticateUser;
+        private IConverter _converter;
 
-        public UserController(IMapper mapper, IJitService jitService, AuthenticateUser authenticateUser)
+        public UserController(IMapper mapper, IJitService jitService, AuthenticateUser authenticateUser, IConverter converter)
         {
             _mapper = mapper;
             _jitService = jitService;
             _authenticateUser = authenticateUser;
+            _converter = converter;
         }
 
         [HttpGet]
@@ -72,9 +77,8 @@ namespace JIT.MVC.Controllers
         [HttpGet]
         public IActionResult Hours()
         {
-            //ovo treba doraditi
-            if (_authenticateUser.LoggedUserId <= 0 || _authenticateUser.LoggedUserId > 10)
-                return RedirectToAction("Index", "Home");
+            if (_authenticateUser.LoggedUserId == 0)
+                return RedirectToAction("Index", "NotFound");
             ViewData["UserId"] = _authenticateUser.LoggedUserId;
 
             return View();
@@ -85,7 +89,7 @@ namespace JIT.MVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "NotFound");
             }
             await _jitService.SaveNewProject(_mapper.Map<ProjectViewModel, ProjectDto>(model));
 
@@ -96,10 +100,57 @@ namespace JIT.MVC.Controllers
         public async Task<IActionResult> List()
         {
             if (_authenticateUser.LoggedUserId == 0)
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("NotFound", "Home");
             var projectsFromDb = await _jitService.GetAllProjectsByUserId(_authenticateUser.LoggedUserId);
 
             return View(_mapper.Map<ICollection<ProjectDto>, ICollection<ProjectViewModel>>(projectsFromDb));
         }
+
+        public async Task<IActionResult> CreatePDF(ExportDatesViewModel model)
+        {
+            var getAllProjectsByUser = await _jitService.GetAllProjectsBetweenDates(_authenticateUser.LoggedUserId, model.StartDate, model.EndDate);
+
+            var projectsForPDFCreation = _mapper.Map<ICollection<ProjectDto>, ICollection<ProjectViewModel>>(getAllProjectsByUser);
+
+            var globalSettings = new GlobalSettings
+            {
+                ColorMode = ColorMode.Color,
+                Orientation = Orientation.Portrait,
+                PaperSize = PaperKind.A4,
+                Margins = new MarginSettings { Top = 10 },
+                DocumentTitle = "PDF Report",
+            };
+
+            //if we want to save it on our hard disk
+            //Out = @"E:\Employee_Report.pdf"
+
+
+            var objectSettings = new ObjectSettings
+            {
+                PagesCount = true,
+                HtmlContent = TemplateGenerator.GetHTMLString(projectsForPDFCreation),
+                WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "Helpers", "pdf-generator.css") },
+                HeaderSettings = { FontName = "Arial", FontSize = 9, Right = "Page [page] of [toPage]", Line = true },
+                FooterSettings = { FontName = "Arial", FontSize = 9, Line = true, Center = "Report Footer" }
+            };
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = globalSettings,
+                Objects = { objectSettings }
+            };
+
+            var file = _converter.Convert(pdf);
+
+            try
+            {
+                return File(file, "application/pdf");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+        }
+
     }
 }
