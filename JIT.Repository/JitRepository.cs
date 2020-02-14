@@ -30,7 +30,7 @@ namespace JIT.Repository
 
         public async Task<ICollection<Project>> GetAllProjectsByUserId(int userId)
         {
-            return await _context.Projects.Where(i => i.UserId == userId).ToListAsync();
+            return await _context.Projects.Where(i => i.UserId == userId).OrderByDescending(i => i.WorkingDate).ToListAsync();
         }
 
         public async Task<ICollection<User>> GetAllUsers()

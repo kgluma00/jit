@@ -1,91 +1,110 @@
 ﻿@model IEnumerable<JIT.MVC.Models.ProjectViewModel>
 
 @{
-    ViewData["Title"] = "List";
+    Layout = null;
 }
 
-<h1 class="text-center">Your working hours</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Table V01</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="\WorkingHours\images\icons\favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="\WorkingHours\vendor\bootstrap\css\bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="\WorkingHours\fonts\font-awesome-4.7.0\css\font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="\WorkingHours\vendor\animate\animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="\WorkingHours\vendor\select2\select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="\WorkingHours\vendor\perfect-scrollbar\perfect-scrollbar.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="\WorkingHours\css\util.css">
+    <link rel="stylesheet" type="text/css" href="\WorkingHours\css\main.css">
+    <!--===============================================================================================-->
+</head>
+<body>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Add hours</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkingDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkingHours)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WorkingDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WorkingHours)
-                </td>
-                <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-                    <a class="btn btn-primary text-white" asp-area="" asp-controller="User" asp-action="List">Edit</a>
-                    <a class="btn btn-info text-white" asp-area="" asp-controller="User" asp-action="List">Details</a>
-                    <a class="btn btn-danger text-white" asp-area="" asp-controller="User" asp-action="List">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="limiter">
+        <div class="container-table100">
+            <h1 class="text-white">TexT moj</h1>
+            <div class="wrap-table100">
+                <div class="table100">
+                    <table>
+                        <thead>
+                            <tr class="table100-head">
+                                <th class="column1">@Html.DisplayNameFor(model => model.ProjectName)</th>
+                                <th class="column2">@Html.DisplayNameFor(model => model.WorkingDate)</th>
+                                <th class="column3">@Html.DisplayNameFor(model => model.WorkingHours)</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="column1">@Html.DisplayFor(modelItem => item.ProjectName)</td>
+                                    <td class="column2">@Html.DisplayFor(modelItem => item.WorkingDate)</td>
+                                    <td class="column3">@Html.DisplayFor(modelItem => item.WorkingHours)</td>
+                                    <td class="column6">
+                                        <a class="btn text-white" style="background: #57b846;" asp-area="" asp-controller="User" asp-action="List">Edit</a>
+                                        <a class="btn text-white" style="background: #e7ed37" asp-area="" asp-controller="User" asp-action="List">Details</a>
+                                        <a class="btn text-white" style="background: #eb7521" asp-area="" asp-controller="User" asp-action="List">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
 
-<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalCenter">
-    Export to PDF
-</button>
-
-
-
-<!-- Button trigger modal -->
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Please select dates</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                </div>
             </div>
-            <form method="post" asp-action="CreatePDF">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col">
-                            <label for="dateofbirth">Start date</label>
-                            <input type="date" name="startDate" id="startDate">
-                        </div>
-                        <div class="col">
-                            <label for="dateofbirth">End date</label>
-                            <input type="date" name="endDate" id="endDate">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-warning text-white">Export</button>
-                </div>
-            </form>
-
         </div>
     </div>
-</div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Please select dates</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" asp-action="CreatePDF">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col">
+                                <label for="dateofbirth">Start date</label>
+                                <input type="date" name="startDate" id="startDate">
+                            </div>
+                            <div class="col">
+                                <label for="dateofbirth">End date</label>
+                                <input type="date" name="endDate" id="endDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-warning text-white">Export</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!--===============================================================================================-->
+    <script src="\WorkingHours\vendor\jquery\jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="\WorkingHours\vendor\bootstrap\js\popper.js"></script>
+    <script src="\WorkingHours\vendor\bootstrap\js\bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="\WorkingHours\vendor\select2\select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="\WorkingHours\js\main.js"></script>
+</body>
+</html>

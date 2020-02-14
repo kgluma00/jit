@@ -46,6 +46,7 @@ namespace JIT.MVC
                 });
 
             services.AddControllersWithViews();
+
             services.AddSingleton<AuthenticateUser>();
             services.AddMvc()
                 .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
