@@ -42,12 +42,13 @@ namespace JIT.MVC
                 .AddCookie("CookieAuth", config =>
                 {
                     config.Cookie.Name = "LoginCookie";
-                    config.LoginPath = "/Home/Authenticate";
+                    config.LoginPath = "/User/Login";
                 });
 
             services.AddControllersWithViews();
 
-            services.AddSingleton<AuthenticateUser>();
+            //services.AddSingleton<AuthenticateUser>();
+
             services.AddMvc()
                 .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
             services.AddDbContext<JitContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("JITConnectionString")));
@@ -78,8 +79,6 @@ namespace JIT.MVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
             app.UseRouting();
 
             //who are you?
@@ -87,6 +86,9 @@ namespace JIT.MVC
 
             //are you allowed?
             app.UseAuthorization();
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

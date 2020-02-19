@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using DinkToPdf;
@@ -10,24 +11,24 @@ using JIT.Business.Interfaces;
 using JIT.Core.DTOs;
 using JIT.MVC.Helpers;
 using JIT.MVC.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JIT.MVC.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IMapper _mapper;
         private readonly IJitService _jitService;
-        private readonly AuthenticateUser _authenticateUser;
         private IConverter _converter;
 
-        public UserController(IMapper mapper, IJitService jitService, AuthenticateUser authenticateUser, IConverter converter)
+        public UserController(IMapper mapper, IJitService jitService, IConverter converter)
         {
             _mapper = mapper;
             _jitService = jitService;
-            _authenticateUser = authenticateUser;
             _converter = converter;
         }
 
@@ -37,11 +38,24 @@ namespace JIT.MVC.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> LoginUser(UserViewModel user)
         {
             var loggedUser = await _jitService.Login(_mapper.Map<UserViewModel, UserDto>(user));
-            _authenticateUser.LoggedUserId = loggedUser.Id;
+
+            var userClaims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Name, loggedUser.Username),
+                new Claim(ClaimTypes.Name, loggedUser.Id.ToString()),
+                new Claim("Loggin_Auth", "Ne dirajte mi ravnicu")
+            };
+
+            var userIdentity = new ClaimsIdentity(userClaims, "User Identity");
+
+            var userPrincipal = new ClaimsPrincipal(new[] { userIdentity });
+
+            await HttpContext.SignInAsync(userPrincipal);
 
             return loggedUser == null ? RedirectToAction("Register") : RedirectToAction("Index", "Home");
         }
@@ -77,9 +91,10 @@ namespace JIT.MVC.Controllers
         [HttpGet]
         public IActionResult Hours()
         {
-            if (_authenticateUser.LoggedUserId == 0)
-                return RedirectToAction("Index", "NotFound");
-            ViewData["UserId"] = _authenticateUser.LoggedUserId;
+            //CLAIM
+            var user = this.User.Claims.ToList();
+
+            ViewData["UserId"] = user[1].Value;
 
             return View();
         }
@@ -99,16 +114,21 @@ namespace JIT.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            if (_authenticateUser.LoggedUserId == 0)
-                return RedirectToAction("NotFound", "Home");
-            var projectsFromDb = await _jitService.GetAllProjectsByUserId(_authenticateUser.LoggedUserId);
+            //if (_authenticateUser.LoggedUserId == 0)
+            //    return RedirectToAction("NotFound", "Home");
+
+            var user = this.User.Claims.ToList();
+
+            var projectsFromDb = await _jitService.GetAllProjectsByUserId(Convert.ToInt32(user[1].Value));
 
             return View(_mapper.Map<ICollection<ProjectDto>, ICollection<ProjectViewModel>>(projectsFromDb));
         }
 
         public async Task<IActionResult> CreatePDF(ExportDatesViewModel model)
         {
-            var getAllProjectsByUser = await _jitService.GetAllProjectsBetweenDates(_authenticateUser.LoggedUserId, model.StartDate, model.EndDate);
+            var user = this.User.Claims.ToList();
+
+            var getAllProjectsByUser = await _jitService.GetAllProjectsBetweenDates(Convert.ToInt32(user[1].Value), model.StartDate, model.EndDate);
 
             var projectsForPDFCreation = _mapper.Map<ICollection<ProjectDto>, ICollection<ProjectViewModel>>(getAllProjectsByUser);
 

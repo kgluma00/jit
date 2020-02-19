@@ -17,25 +17,25 @@ namespace JIT.MVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AuthenticateUser _authenticateUser;
 
-        public HomeController(ILogger<HomeController> logger, AuthenticateUser authenticateUser)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _authenticateUser = authenticateUser;
         }
 
         public IActionResult Index()
         {
-            if (_authenticateUser.LoggedUserId == 0) return RedirectToAction("NotFound");
+            //if (_authenticateUser.LoggedUserId == 0) return RedirectToAction("NotFound");
+
             return View();
         }
 
         [HttpGet]
         public IActionResult NotFound()
         {
+            var user = this.User.Claims.ToList();
 
-            return View(_authenticateUser);
+            return View();
         }
 
         public IActionResult Privacy()
