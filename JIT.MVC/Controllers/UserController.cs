@@ -33,6 +33,7 @@ namespace JIT.MVC.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
@@ -43,6 +44,13 @@ namespace JIT.MVC.Controllers
         public async Task<IActionResult> LoginUser(UserViewModel user)
         {
             var loggedUser = await _jitService.Login(_mapper.Map<UserViewModel, UserDto>(user));
+
+            if (loggedUser == null)
+            {
+                //doraditi ovo
+                ModelState.AddModelError("UserNotExits", "That user does not exist");
+                return View("Login");
+            }
 
             var userClaims = new List<Claim>()
             {

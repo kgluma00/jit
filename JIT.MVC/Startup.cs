@@ -42,7 +42,7 @@ namespace JIT.MVC
                 .AddCookie("CookieAuth", config =>
                 {
                     config.Cookie.Name = "LoginCookie";
-                    config.LoginPath = "/User/Login";
+                    config.LoginPath = "/Home/NotFound";
                 });
 
             services.AddControllersWithViews();

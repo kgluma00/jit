@@ -33,8 +33,6 @@ namespace JIT.MVC.Controllers
         [HttpGet]
         public IActionResult NotFound()
         {
-            var user = this.User.Claims.ToList();
-
             return View();
         }
 
