@@ -61,12 +61,15 @@ namespace JIT.MVC.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> RegisterNew(UserViewModel user)
         {
             if (!ModelState.IsValid) return View();
