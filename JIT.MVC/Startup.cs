@@ -48,6 +48,9 @@ namespace JIT.MVC
             services.AddControllersWithViews();
 
             //services.AddSingleton<AuthenticateUser>();
+            services.Configure<EmailOptions>(Configuration.GetSection("EmailOptions"));
+
+            //services.AddSingleton(Configuration);
 
             services.AddMvc()
                 .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);

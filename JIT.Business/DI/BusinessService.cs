@@ -18,6 +18,7 @@ namespace JIT.Business.DI
             }
             
             services.TryAdd(ServiceDescriptor.Scoped<IJitService, JitService>());
+            services.TryAdd(ServiceDescriptor.Scoped<IEmailService, EmailService>());
 
             return services;
         }

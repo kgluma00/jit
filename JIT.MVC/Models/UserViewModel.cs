@@ -17,6 +17,8 @@ namespace JIT.MVC.Models
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public bool IsAdmin { get; set; }
+        public bool isAuthenticated { get; set; }
+
         public ProjectViewModel Project { get; set; }
     }
 }

@@ -21,6 +21,8 @@ namespace JIT.Core.Entities
         public string LastName { get; set; }
         [Required]
         public bool IsAdmin { get; set; }
+        [Required]
+        public bool isAuthenticated { get; set; }
         public Project Project { get; set; }
 
     }

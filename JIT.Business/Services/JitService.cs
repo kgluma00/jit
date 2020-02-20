@@ -137,5 +137,17 @@ namespace JIT.Business.Services
 
             return _mapper.Map<ICollection<Project>, ICollection<ProjectDto>>(projectsFromDb);
         }
+
+        public async Task<bool> AuthenticateUser(int id)
+        {
+            var userFromDb = await _jitRepository.GetUserById(id);
+            if (userFromDb == null) return false;
+
+            userFromDb.isAuthenticated = true;
+
+            _jitRepository.Update(userFromDb);
+
+            return true;
+        }
     }
 }

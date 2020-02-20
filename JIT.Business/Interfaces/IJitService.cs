@@ -15,6 +15,7 @@ namespace JIT.Business.Interfaces
         Task<UserDto> GetUserById(int id, bool includeWorkingHours = false);
         Task<UserDto> Register(UserDto user);
         Task<bool> UserExists(UserDto user);
+        Task<bool> AuthenticateUser(int user);
         Task<UserDto> Login(UserDto user);
         Task<User> GetUserByUsername(UserDto user);
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
