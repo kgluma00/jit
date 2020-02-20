@@ -13,7 +13,6 @@ using JIT.MVC.Helpers;
 using JIT.MVC.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JIT.MVC.Controllers
@@ -45,6 +44,13 @@ namespace JIT.MVC.Controllers
         {
             var loggedUser = await _jitService.Login(_mapper.Map<UserViewModel, UserDto>(user));
 
+            if (!loggedUser.isAuthenticated)
+            {
+                //doraditi ovo
+                ModelState.AddModelError("Authenticate", "That user is not authenticated");
+                return View("Authenticate");
+            }
+
             if (loggedUser == null)
             {
                 //doraditi ovo
@@ -70,7 +76,6 @@ namespace JIT.MVC.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-
         public IActionResult Register()
         {
             return View();
@@ -96,7 +101,8 @@ namespace JIT.MVC.Controllers
             }
 
             await _jitService.Register(_mapper.Map<UserViewModel, UserDto>(user));
-            return RedirectToAction("Login");
+
+            return View("Authenticate",user);
         }
 
         [HttpGet]

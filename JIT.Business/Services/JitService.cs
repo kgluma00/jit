@@ -99,7 +99,6 @@ namespace JIT.Business.Services
             CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
 
             var userToDb = _mapper.Map<UserDto, User>(user);
-
             userToDb.PasswordHash = passwordHash;
             userToDb.PasswordSalt = passwordSalt;
 

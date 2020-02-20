@@ -1,0 +1,45 @@
+﻿@model JIT.MVC.Models.UserViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="@Url.Content("../../login/css/main.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("../../login/css/util.css")" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/png" href="@Url.Content("../../images/icons/favicon.ico")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("../../login/vendor/bootstrap/css/bootstrap.min.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("../../login/fonts/font-awesome-4.7.0/css/font-awesome.min.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("../../login/vendor/animate/animate.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("../../login/vendor/css-hamburgers/hamburgers.min.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("../../login/vendor/select2/select2.min.css")">
+</head>
+<body>
+
+<div class="container-fluid h-100 d-flex justify-content-center align-items-center" style="background: linear-gradient(-135deg, #c850c0, #4158d0);">
+    <div class="row bg-white h-50 w-75 d-flex justify-content-center align-items-center">
+        <h1>patkica</h1>
+    </div>
+</div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+    <script type="text/javascript" src="@Url.Content("../../login/js/main.js")" asp-append-version="true"></script>
+    <script src="../../login/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="@Url.Content("../../login/vendor/bootstrap/js/popper.js")"></script>
+    <script src="@Url.Content("../../login/vendor/bootstrap/js/bootstrap.min.js")"></script>
+    <!--===============================================================================================-->
+    <script src="@Url.Content("../../login/vendor/select2/select2.min.js")"></script>
+    <!--===============================================================================================-->
+    <script src="@Url.Content("../../login/vendor/tilt/tilt.jquery.min.js")"></script>
+
+</body>
+</html>
+
