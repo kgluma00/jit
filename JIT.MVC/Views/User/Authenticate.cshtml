@@ -6,40 +6,30 @@
 
 <!DOCTYPE html>
 
-<html>
+<html style="height:100%">
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
-    <link href="@Url.Content("../../login/css/main.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("../../login/css/util.css")" rel="stylesheet" type="text/css" />
-    <link rel="icon" type="image/png" href="@Url.Content("../../images/icons/favicon.ico")" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("../../login/vendor/bootstrap/css/bootstrap.min.css")">
-    <link rel="stylesheet" type="text/css" href="@Url.Content("../../login/fonts/font-awesome-4.7.0/css/font-awesome.min.css")">
-    <link rel="stylesheet" type="text/css" href="@Url.Content("../../login/vendor/animate/animate.css")">
-    <link rel="stylesheet" type="text/css" href="@Url.Content("../../login/vendor/css-hamburgers/hamburgers.min.css")">
-    <link rel="stylesheet" type="text/css" href="@Url.Content("../../login/vendor/select2/select2.min.css")">
+    <title>Authenticate</title>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 </head>
-<body>
+<body style="height:100%">
 
-<div class="container-fluid h-100 d-flex justify-content-center align-items-center" style="background: linear-gradient(-135deg, #c850c0, #4158d0);">
-    <div class="row bg-white h-50 w-75 d-flex justify-content-center align-items-center">
-        <h1>patkica</h1>
+    <div class="container-fluid h-100 d-flex justify-content-center align-items-center" style="background: linear-gradient(-135deg, #c850c0, #4158d0);">
+        <div class="row bg-white h-50 w-75 d-flex justify-content-center align-items-center">
+            <h1>patkica</h1>
+        </div>
     </div>
-</div>
 
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     }
-    <script type="text/javascript" src="@Url.Content("../../login/js/main.js")" asp-append-version="true"></script>
-    <script src="../../login/vendor/jquery/jquery-3.2.1.min.js"></script>
-    <!--===============================================================================================-->
-    <script src="@Url.Content("../../login/vendor/bootstrap/js/popper.js")"></script>
-    <script src="@Url.Content("../../login/vendor/bootstrap/js/bootstrap.min.js")"></script>
-    <!--===============================================================================================-->
-    <script src="@Url.Content("../../login/vendor/select2/select2.min.js")"></script>
-    <!--===============================================================================================-->
-    <script src="@Url.Content("../../login/vendor/tilt/tilt.jquery.min.js")"></script>
-
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>
 
