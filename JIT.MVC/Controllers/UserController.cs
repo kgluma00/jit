@@ -48,7 +48,7 @@ namespace JIT.MVC.Controllers
             {
                 //doraditi ovo
                 ModelState.AddModelError("Authenticate", "That user is not authenticated");
-                return View("Authenticate",loggedUser.Id);
+                return View("Authenticate",_mapper.Map<UserDto,UserViewModel>(loggedUser));
             }
 
             if (loggedUser == null)

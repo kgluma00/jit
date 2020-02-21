@@ -11,7 +11,7 @@ namespace JIT.Business.Services
 {
     public class EmailService : IEmailService
     {
-        public async Task<bool> SendEmail(UserDto user, string secretKey)
+        public async Task<bool> SendEmail(UserDto? user, string secretKey,int? id)
         {
             var apiKey = secretKey;
             var client = new SendGridClient(apiKey);

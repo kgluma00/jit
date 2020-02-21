@@ -8,6 +8,6 @@ namespace JIT.Business.Interfaces
 {
     public interface IEmailService
     {
-        Task<bool> SendEmail(UserDto user, string secretKey);
+        Task<bool> SendEmail(UserDto? user, string secretKey, int? id);
     }
 }

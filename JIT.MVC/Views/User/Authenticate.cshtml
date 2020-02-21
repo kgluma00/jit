@@ -36,33 +36,23 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
-    <script>
-        var x = @Model.Id;
+    <script type="text/javascript">
 
         function sendEmail()
         {
-            console.log(@Model.Id);
-        }
-
-       function previewPayroll(id) {
-            showLoadingIcon();
             $.ajax({
-                url: '@Url.Action("AuthenticateUser", "Authentication")',
+                url: '@Url.Action("AuthenticateUser","Authentication")',
                 type: "Post",
-                data: { id:  },
+                data:@Model.Id,
                 success: function (data) {
-                    hideLoadingIcon();
-                    $('#displayReport').html(data);
-                    $('#displayReport').dialog("open");
+                   console.log(data)
                 }
             });
         }
-    </script>
+      
 
+    </script>
 </body>
 </html>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+

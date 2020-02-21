@@ -87,6 +87,7 @@ namespace JIT.Business.Services
             if (!VerifyPasswordHash(userPassword, userFromDb.PasswordHash, userFromDb.PasswordSalt)) return null;
 
             user.Id = userFromDb.Id;
+            user.isAuthenticated = userFromDb.isAuthenticated;
 
             return user;
         }
