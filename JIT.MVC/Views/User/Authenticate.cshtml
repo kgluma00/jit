@@ -19,17 +19,50 @@
 <body style="height:100%">
 
     <div class="container-fluid h-100 d-flex justify-content-center align-items-center" style="background: linear-gradient(-135deg, #c850c0, #4158d0);">
-        <div class="row bg-white h-50 w-75 d-flex justify-content-center align-items-center">
-            <h1>patkica</h1>
+        <div class="row bg-white h-50 w-50 rounded">
+            <div class="col-6 d-flex align-items-center">
+                <img src="~/images/mail.jpg" style="max-width:80%" />
+            </div>
+            <div class="col-6">
+                <div class="row d-flex align-items-center h-100">
+                    <div class="row">
+                        <h4 class="text-info">Please check your email and complete your registration process.</h4>
+                        <a class="btn btn-warning text-white mx-auto mt-2" onclick="sendEmail()">Send again</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        var x = @Model.Id;
+
+        function sendEmail()
+        {
+            console.log(@Model.Id);
+        }
+
+       function previewPayroll(id) {
+            showLoadingIcon();
+            $.ajax({
+                url: '@Url.Action("AuthenticateUser", "Authentication")',
+                type: "Post",
+                data: { id:  },
+                success: function (data) {
+                    hideLoadingIcon();
+                    $('#displayReport').html(data);
+                    $('#displayReport').dialog("open");
+                }
+            });
+        }
+    </script>
+
 </body>
 </html>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

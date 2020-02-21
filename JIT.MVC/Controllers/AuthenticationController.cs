@@ -16,7 +16,7 @@ namespace JIT.MVC.Controllers
             _jitService = jitService;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("auth/{id}")]
         public async Task<IActionResult> AuthenticateUser(int id)
         {
