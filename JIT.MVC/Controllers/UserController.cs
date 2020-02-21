@@ -14,6 +14,7 @@ using JIT.MVC.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace JIT.MVC.Controllers
 {
@@ -23,12 +24,14 @@ namespace JIT.MVC.Controllers
         private readonly IMapper _mapper;
         private readonly IJitService _jitService;
         private IConverter _converter;
+        private readonly IOptions<EmailOptions> _emailOptions;
 
-        public UserController(IMapper mapper, IJitService jitService, IConverter converter)
+        public UserController(IMapper mapper, IJitService jitService, IConverter converter, IOptions<EmailOptions> emailOptions)
         {
             _mapper = mapper;
             _jitService = jitService;
             _converter = converter;
+            _emailOptions = emailOptions;
         }
 
         [HttpGet]
@@ -48,7 +51,7 @@ namespace JIT.MVC.Controllers
             {
                 //doraditi ovo
                 ModelState.AddModelError("Authenticate", "That user is not authenticated");
-                return View("Authenticate",_mapper.Map<UserDto,UserViewModel>(loggedUser));
+                return View("Authenticate", _mapper.Map<UserDto, UserViewModel>(loggedUser));
             }
 
             if (loggedUser == null)
@@ -71,7 +74,7 @@ namespace JIT.MVC.Controllers
 
             await HttpContext.SignInAsync(userPrincipal);
 
-            return loggedUser == null ? RedirectToAction("Register") : RedirectToAction("Index", "Home");
+            return loggedUser == null ? RedirectToAction("Register") : RedirectToAction("Authenticate", user);
         }
 
         [HttpGet]
@@ -100,9 +103,9 @@ namespace JIT.MVC.Controllers
                 return View("Register");
             }
 
-            await _jitService.Register(_mapper.Map<UserViewModel, UserDto>(user));
+            await _jitService.Register(_mapper.Map<UserViewModel, UserDto>(user), _emailOptions.Value.SendGridApiKey);
 
-            return View("Authenticate",user);
+            return View("Authenticate", user);
         }
 
         [HttpGet]

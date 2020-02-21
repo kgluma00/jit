@@ -15,6 +15,7 @@ namespace JIT.Business.Services
 
         private readonly IMapper _mapper;
         private readonly IJitRepository _jitRepository;
+        private readonly IEmailService _emailService;
 
         public JitService(IMapper mapper, IJitRepository jitRepository)
         {
@@ -92,7 +93,7 @@ namespace JIT.Business.Services
             return user;
         }
 
-        public async Task<UserDto> Register(UserDto user)
+        public async Task<UserDto> Register(UserDto user, string secretApiKey)
         {
             byte[] passwordHash, passwordSalt = { 0 };
 
@@ -103,7 +104,10 @@ namespace JIT.Business.Services
             userToDb.PasswordHash = passwordHash;
             userToDb.PasswordSalt = passwordSalt;
 
-            await _jitRepository.Register(userToDb);
+            var registerUser = await _jitRepository.Register(userToDb);
+
+            if (registerUser != null)
+                await _emailService.SendEmail(user, secretApiKey, null);
 
             return user;
         }
