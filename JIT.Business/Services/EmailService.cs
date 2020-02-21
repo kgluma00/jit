@@ -11,8 +11,19 @@ namespace JIT.Business.Services
 {
     public class EmailService : IEmailService
     {
+        private readonly IJitService _jitService;
+
+        public EmailService(IJitService jitService)
+        {
+            _jitService = jitService;
+        }
+
         public async Task<bool> SendEmail(UserDto? user, string secretKey,int? id)
         {
+            if (user == null)
+            {
+                user = await _jitService.GetUserById(id.Value);
+            }
             var apiKey = secretKey;
             var client = new SendGridClient(apiKey);
 
@@ -24,7 +35,9 @@ namespace JIT.Business.Services
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
 
-            return true;
+            if (response.StatusCode == System.Net.HttpStatusCode.Accepted) return true;
+
+            return false;
         }
 
 

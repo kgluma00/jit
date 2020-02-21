@@ -23,8 +23,8 @@ namespace JIT.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> AuthenticateUser(int id)
         {
-            await _emailService.SendEmail(null,_emailOptions.Value.SendGridApiKey,id);
-            return View();
+           var sendEmail = await _emailService.SendEmail(null,_emailOptions.Value.SendGridApiKey,id);
+            return Ok(sendEmail);
         }
     }
 }
