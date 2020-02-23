@@ -14,6 +14,7 @@ namespace JIT.Business.Interfaces
         Task<ICollection<ProjectDto>> GetAllProjectsBetweenDates(int userId, DateTime startDate, DateTime endDate);
         Task<UserDto> GetUserById(int id, bool includeWorkingHours = false);
         Task<UserDto> Register(UserDto user,string secretApiKey);
+        Task<bool> AuthenticateUserByRequest(int id);
         Task<bool> UserExists(UserDto user);
         Task<bool> AuthenticateUser(int user);
         Task<UserDto> Login(UserDto user);

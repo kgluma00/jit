@@ -153,5 +153,18 @@ namespace JIT.Business.Services
 
             return true;
         }
+
+        public async Task<bool> AuthenticateUserByRequest(int id)
+        {
+            var userFromDb = await GetUserById(id);
+            if (userFromDb != null)
+            {
+                userFromDb.isAuthenticated = true;
+               _jitRepository.Update(_mapper.Map<UserDto, User>(userFromDb));
+                return true;
+            }
+
+            return false;
+        }
     }
 }

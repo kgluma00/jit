@@ -12,11 +12,13 @@ namespace JIT.MVC.Controllers
     public class AuthenticationController : Controller
     {
         private readonly IEmailService _emailService;
+        private readonly IJitService _jitService;
         private readonly IOptions<EmailOptions> _emailOptions;
 
-        public AuthenticationController(IEmailService emailService, IOptions<EmailOptions> emailOptions)
+        public AuthenticationController(IEmailService emailService, IJitService jitService, IOptions<EmailOptions> emailOptions)
         {
             _emailService = emailService;
+            _jitService = jitService;
             _emailOptions = emailOptions;
         }
 
@@ -25,6 +27,15 @@ namespace JIT.MVC.Controllers
         {
            var sendEmail = await _emailService.SendEmail(null,_emailOptions.Value.SendGridApiKey,id);
             return Ok(sendEmail);
+        }
+
+        [HttpGet]
+        [Route("auth/{id}")]
+        public async Task<IActionResult> AuthenticateUserByRequest(int id)
+        {
+            var isAuth = await _jitService.AuthenticateUser(id);
+
+            return View();
         }
     }
 }

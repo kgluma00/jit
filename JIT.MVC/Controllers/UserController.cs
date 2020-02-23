@@ -74,7 +74,7 @@ namespace JIT.MVC.Controllers
 
             await HttpContext.SignInAsync(userPrincipal);
 
-            return loggedUser == null ? RedirectToAction("Register") : RedirectToAction("Authenticate", user);
+            return RedirectToAction("Index","Home");
         }
 
         [HttpGet]
