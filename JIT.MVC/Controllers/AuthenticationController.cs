@@ -36,7 +36,7 @@ namespace JIT.MVC.Controllers
             var isAuth = await _jitService.AuthenticateUser(id);
 
             if (isAuth)
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "User");
 
             return RedirectToAction("NotFound", "Home");
         }

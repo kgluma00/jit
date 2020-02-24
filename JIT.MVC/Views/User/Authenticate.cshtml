@@ -50,11 +50,13 @@
             if (data === true) {
                 swal({
                     title: "Good job!",
-                    text: "You have added your hours",
+                    text: "Email has been sent!",
                     icon: "success",
                     button: "Close",
-                })
-                return true;
+                }).then((value) => {
+                  window.location.href = 'https://localhost:44312/' ;
+                });
+
             } else {
                 swal({
                     title: "Error",
