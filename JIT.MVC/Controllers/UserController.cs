@@ -47,18 +47,18 @@ namespace JIT.MVC.Controllers
         {
             var loggedUser = await _jitService.Login(_mapper.Map<UserViewModel, UserDto>(user));
 
-            if (!loggedUser.isAuthenticated)
-            {
-                //doraditi ovo
-                ModelState.AddModelError("Authenticate", "That user is not authenticated");
-                return View("Authenticate", _mapper.Map<UserDto, UserViewModel>(loggedUser));
-            }
-
             if (loggedUser == null)
             {
                 //doraditi ovo
                 ModelState.AddModelError("UserNotExits", "That user does not exist");
                 return View("Login");
+            }
+
+            if (!loggedUser.isAuthenticated)
+            {
+                //doraditi ovo
+                ModelState.AddModelError("Authenticate", "That user is not authenticated");
+                return View("Authenticate", _mapper.Map<UserDto, UserViewModel>(loggedUser));
             }
 
             var userClaims = new List<Claim>()
@@ -103,9 +103,9 @@ namespace JIT.MVC.Controllers
                 return View("Register");
             }
 
-            await _jitService.Register(_mapper.Map<UserViewModel, UserDto>(user), _emailOptions.Value.SendGridApiKey);
+            var registerUser = await _jitService.Register(_mapper.Map<UserViewModel, UserDto>(user), _emailOptions.Value.SendGridApiKey);
 
-            return View("Authenticate", user);
+            return View("Authenticate", _mapper.Map<UserDto,UserViewModel>(registerUser));
         }
 
         [HttpGet]

@@ -15,7 +15,6 @@ namespace JIT.Business.Services
 
         private readonly IMapper _mapper;
         private readonly IJitRepository _jitRepository;
-        private readonly IEmailService _emailService;
 
         public JitService(IMapper mapper, IJitRepository jitRepository)
         {
@@ -103,11 +102,8 @@ namespace JIT.Business.Services
             var userToDb = _mapper.Map<UserDto, User>(user);
             userToDb.PasswordHash = passwordHash;
             userToDb.PasswordSalt = passwordSalt;
-
-            var registerUser = await _jitRepository.Register(userToDb);
-
-            if (registerUser != null)
-                await _emailService.SendEmail(user, secretApiKey, null);
+            var registeredUser = await _jitRepository.Register(userToDb);
+            user.Id = registeredUser.Id;
 
             return user;
         }
@@ -160,7 +156,7 @@ namespace JIT.Business.Services
             if (userFromDb != null)
             {
                 userFromDb.isAuthenticated = true;
-               _jitRepository.Update(_mapper.Map<UserDto, User>(userFromDb));
+                _jitRepository.Update(_mapper.Map<UserDto, User>(userFromDb));
                 return true;
             }
 

@@ -25,7 +25,7 @@ namespace JIT.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> AuthenticateUser(int id)
         {
-           var sendEmail = await _emailService.SendEmail(null,_emailOptions.Value.SendGridApiKey,id);
+           var sendEmail = await _emailService.SendEmail(_emailOptions.Value.SendGridApiKey,id);
             return Ok(sendEmail);
         }
 
@@ -35,7 +35,10 @@ namespace JIT.MVC.Controllers
         {
             var isAuth = await _jitService.AuthenticateUser(id);
 
-            return View();
+            if (isAuth)
+                return RedirectToAction("Index", "Home");
+
+            return RedirectToAction("NotFound", "Home");
         }
     }
 }

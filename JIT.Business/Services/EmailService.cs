@@ -11,14 +11,14 @@ namespace JIT.Business.Services
 {
     public class EmailService : IEmailService
     {
-        private readonly IJitService _jitService;
+        public readonly IJitService _jitService;
 
         public EmailService(IJitService jitService)
         {
             _jitService = jitService;
         }
 
-        public async Task<bool> SendEmail(UserDto? user, string secretKey,int? id)
+        public async Task<bool> SendEmail(string secretKey, int? id, UserDto user = null)
         {
             if (user == null)
             {
@@ -31,7 +31,7 @@ namespace JIT.Business.Services
             var subject = "Welcome to Just in Time";
             var to = new EmailAddress(user.Email, user.Name);
             var plainTextContent = "Please click the link to activate your account";
-            var htmlContent = "Please click the <a href=''>link</a> below to activate your account";
+            var htmlContent = $"Please click the <a href='https://localhost:44312/auth/{user.Id}'>link</a> below to activate your account";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
 
