@@ -25,8 +25,6 @@ namespace JIT.MVC.Controllers
 
         public IActionResult Index()
         {
-            //if (_authenticateUser.LoggedUserId == 0) return RedirectToAction("NotFound");
-
             return View();
         }
 

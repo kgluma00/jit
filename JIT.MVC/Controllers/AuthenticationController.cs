@@ -34,7 +34,6 @@ namespace JIT.MVC.Controllers
         public async Task<IActionResult> AuthenticateUserByRequest(int id)
         {
             var isAuth = await _jitService.AuthenticateUser(id);
-
             if (isAuth)
                 return RedirectToAction("Login", "User");
 

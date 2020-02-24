@@ -22,7 +22,7 @@ namespace JIT.MVC.Helpers
                             <head>
                             </head>
                             <body>
-                                <div class='header'><h1>This is the generated PDF report!!!</h1></div>
+                                <div class='header'><h1>Your Working Hours</h1></div>
                                 <table align='center'>
                                     <tr>
                                         <th>Project Name</th>

@@ -1,20 +1,44 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = null;
 }
 
-<div class="container mt-5">
-    <div class="row text-center mb-5">
-        <div class="col">
-            <h5 class="text-dark">Welcome to JIT</h5>
-            <h1 class="text-info" style="font-size:7vh">Just in Time</h1>
-        </div>
-    </div>
-    @*<div class="row text-center">
-        <div class="col-6">
-            <a class="btn btn-success" asp-action="New" asp-controller="User" role="button">Save my hours</a>
-        </div>
-        <div class="col-6">
-            <a class="btn btn-info" asp-action="Index" asp-controller="User" role="button">See all users</a>
+@*<div class="container mt-5">
+        <div class="row text-center mb-5">
+            <div class="col">
+                <h5 class="text-dark">Welcome to JIT</h5>
+                <h1 class="text-info" style="font-size:7vh">Just in Time</h1>
+            </div>
         </div>
     </div>*@
-</div>
+
+
+<!DOCTYPE html>
+
+<html style="height:100%">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+</head>
+<body style="height:100%">
+
+    <div class="container-fluid h-100" style="background: linear-gradient(-135deg, #c850c0, #4158d0);">
+        <div class="row h-100 justify-content-center align-items-center rounded">
+            <div class="row h-50 w-50 text-center">
+                <div class="col d-flex align-items-center justify-content-center" style="background:linear-gradient(to right, #56ab2f, #a8e063);"><a asp-action="" asp-controller="">aa</a></div>
+                <div class="col d-flex align-items-center justify-content-center" style="background: linear-gradient(to right, #00c3ff, #ffff1c);"><a asp-controller="" asp-action="">bb</a></div>
+                <div class="w-100"></div>
+                <div class="col d-flex align-items-center justify-content-center" style="background: linear-gradient(to right, #00c3ff, #ffff1c);"><a asp-controller="" asp-action="">bb</a></div>
+                <div class="col d-flex align-items-center justify-content-center" style="background: linear-gradient(to right, #00c3ff, #ffff1c);"><a asp-controller="" asp-action="">bb</a></div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
