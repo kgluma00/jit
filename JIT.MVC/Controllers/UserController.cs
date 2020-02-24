@@ -69,9 +69,7 @@ namespace JIT.MVC.Controllers
             };
 
             var userIdentity = new ClaimsIdentity(userClaims, "User Identity");
-
             var userPrincipal = new ClaimsPrincipal(new[] { userIdentity });
-
             await HttpContext.SignInAsync(userPrincipal);
 
             return RedirectToAction("Index","Home");
@@ -113,7 +111,6 @@ namespace JIT.MVC.Controllers
         {
             //CLAIM
             var user = this.User.Claims.ToList();
-
             ViewData["UserId"] = user[1].Value;
 
             return View();
@@ -134,11 +131,7 @@ namespace JIT.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            //if (_authenticateUser.LoggedUserId == 0)
-            //    return RedirectToAction("NotFound", "Home");
-
             var user = this.User.Claims.ToList();
-
             var projectsFromDb = await _jitService.GetAllProjectsByUserId(Convert.ToInt32(user[1].Value));
 
             return View(_mapper.Map<ICollection<ProjectDto>, ICollection<ProjectViewModel>>(projectsFromDb));
@@ -147,9 +140,7 @@ namespace JIT.MVC.Controllers
         public async Task<IActionResult> CreatePDF(ExportDatesViewModel model)
         {
             var user = this.User.Claims.ToList();
-
             var getAllProjectsByUser = await _jitService.GetAllProjectsBetweenDates(Convert.ToInt32(user[1].Value), model.StartDate, model.EndDate);
-
             var projectsForPDFCreation = _mapper.Map<ICollection<ProjectDto>, ICollection<ProjectViewModel>>(getAllProjectsByUser);
 
             var globalSettings = new GlobalSettings
