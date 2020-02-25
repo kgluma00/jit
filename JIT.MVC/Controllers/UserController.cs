@@ -137,6 +137,17 @@ namespace JIT.MVC.Controllers
             return View(_mapper.Map<ICollection<ProjectDto>, ICollection<ProjectViewModel>>(projectsFromDb));
         }
 
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            foreach (var cookie in Request.Cookies.Keys)
+            {
+                Response.Cookies.Delete(cookie);
+            }
+
+            return RedirectToAction("Login");
+        }
+
         public async Task<IActionResult> CreatePDF(ExportDatesViewModel model)
         {
             var user = this.User.Claims.ToList();
