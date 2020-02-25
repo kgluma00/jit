@@ -162,5 +162,10 @@ namespace JIT.Business.Services
 
             return false;
         }
+
+        public async Task<bool> DeleteProject(int id)
+        {
+           return await _jitRepository.DeleteProject(id);
+        }
     }
 }

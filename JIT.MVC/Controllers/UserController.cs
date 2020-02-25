@@ -72,7 +72,7 @@ namespace JIT.MVC.Controllers
             var userPrincipal = new ClaimsPrincipal(new[] { userIdentity });
             await HttpContext.SignInAsync(userPrincipal);
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -103,7 +103,7 @@ namespace JIT.MVC.Controllers
 
             var registerUser = await _jitService.Register(_mapper.Map<UserViewModel, UserDto>(user), _emailOptions.Value.SendGridApiKey);
 
-            return View("Authenticate", _mapper.Map<UserDto,UserViewModel>(registerUser));
+            return View("Authenticate", _mapper.Map<UserDto, UserViewModel>(registerUser));
         }
 
         [HttpGet]
@@ -148,6 +148,13 @@ namespace JIT.MVC.Controllers
             return RedirectToAction("Login");
         }
 
+        [HttpPost]
+        public async Task<bool> DeleteProject(int id)
+        {
+            var removedProject = await _jitService.DeleteProject(id);
+
+            return removedProject;
+        }
         public async Task<IActionResult> CreatePDF(ExportDatesViewModel model)
         {
             var user = this.User.Claims.ToList();

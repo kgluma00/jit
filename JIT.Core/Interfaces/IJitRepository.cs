@@ -15,6 +15,7 @@ namespace JIT.Core.Interfaces
         Task<bool> UserExists(string username);
         Task<ICollection<Project>> GetAllProjectsByUserId(int userId);
         Task<ICollection<Project>> GetAllProjectsBetweenDates(int userId, DateTime startDate, DateTime endDate);
+        Task<bool> DeleteProject(int id);
         void Update(User user);
         void Delete(User user);
         Task<Project> SaveNewProject(Project project);

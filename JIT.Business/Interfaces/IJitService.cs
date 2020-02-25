@@ -23,6 +23,7 @@ namespace JIT.Business.Interfaces
         bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt);
         public Task<Project> SaveNewProject(ProjectDto project);
         //void Create(UserDto user);
+        public Task<bool> DeleteProject(int id);
         void Update(UserDto user);
         void Delete(UserDto user);
     }

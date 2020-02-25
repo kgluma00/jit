@@ -13,7 +13,7 @@ namespace JIT.MVC.Models
         [Display(Name = "Project name")]
         public string ProjectName { get; set; }
         [Display(Name = "Working Date")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime WorkingDate { get; set; }
         [Display(Name = "Working Hours")]
         public double WorkingHours { get; set; }

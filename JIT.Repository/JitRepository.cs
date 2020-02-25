@@ -21,6 +21,15 @@ namespace JIT.Repository
         public void Delete(User user)
         {
             _context.Remove(user);
+            _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> DeleteProject(int id)
+        {
+            var projectToDelete = _context.Projects.Where(i => i.Id == id).SingleOrDefault();
+             _context.Projects.Remove(projectToDelete);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<ICollection<Project>> GetAllProjectsBetweenDates(int userId, DateTime startDate, DateTime endDate)

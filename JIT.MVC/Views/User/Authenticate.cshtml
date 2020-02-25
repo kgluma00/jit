@@ -41,7 +41,6 @@
     <script type="text/javascript">
 
  function sendEmail() {
-    console.log(@Model.Id)
     $.ajax({
         url: '@Url.Action("AuthenticateUser","Authentication")',
         type: "Post",

@@ -49,11 +49,10 @@
                                 <tr>
                                     <td class="column1">@Html.DisplayFor(modelItem => item.ProjectName)</td>
                                     <td class="column2">@Html.DisplayFor(modelItem => item.WorkingDate)</td>
-                                    <td class="column3">Hours</td>
+                                    <td class="column3">@Html.DisplayFor(modelItem => item.WorkingHours)</td>
                                     <td class="column6">
-                                        <a class="btn text-white" style="background: #512b58;" asp-area="" asp-controller="User" asp-action="List">Edit</a>
-                                        <a class="btn text-white" style="background: #ffa41b" asp-area="" asp-controller="User" asp-action="List">Details</a>
-                                        <a class="btn text-white" style="background: #ff5151" asp-area="" asp-controller="User" asp-action="List">Delete</a>
+                                        <a class="btn text-white" style="background: #512b58;">Edit</a>
+                                        <a class="btn text-white" style="background: #ff5151;" onclick="deleteHours(@item.Id)">Delete</a>
                                     </td>
                                 </tr>
                             }
@@ -105,6 +104,7 @@
         </div>
     </div>
 
+    <!--Edit Hours Modal-->
     <!--===============================================================================================-->
     <script src="\WorkingHours\vendor\jquery\jquery-3.2.1.min.js"></script>
     <!--===============================================================================================-->
@@ -114,5 +114,42 @@
     <script src="\WorkingHours\vendor\select2\select2.min.js"></script>
     <!--===============================================================================================-->
     <script src="\WorkingHours\js\main.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script type="text/javascript">
+
+        function deleteHours(id) {
+    $.ajax({
+        url: '@Url.Action("DeleteProject","User")',
+        type: "POST",
+        data: {
+            id: id
+        },
+        success: function(data) {
+            if (data === true) {
+                swal({
+                    title: "Good job!",
+                    text: "Email has been sent!",
+                    icon: "success",
+                    button: "Close",
+                }).then((value) => {
+                     location.reload();
+                });
+
+            } else {
+                swal({
+                    title: "Error",
+                    text: "All fields are mandatory",
+                    icon: "error",
+                    button: "Close",
+                })
+                return false;
+            }
+        }
+    });
+        }
+
+    </script>
+
 </body>
 </html>
