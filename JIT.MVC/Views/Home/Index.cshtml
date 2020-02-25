@@ -23,17 +23,49 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+
+    <style>
+       .underline-text {
+        text-decoration:none !important;
+        }
+        div#cardOne:hover {
+        background-color:#543859 !important;
+        }
+        div#cardTwo:hover {
+        background-color:#f7ac3b !important;
+        }
+        div#cardThree:hover {
+        background-color:#ff5959 !important;
+        }
+
+    </style>
 </head>
 <body style="height:100%">
 
-    <div class="container-fluid h-100" style="background: linear-gradient(-135deg, #c850c0, #4158d0);">
-        <div class="row h-100 justify-content-center align-items-center rounded">
-            <div class="row h-50 w-50 text-center">
-                <div class="col d-flex align-items-center justify-content-center" style="background:linear-gradient(to right, #56ab2f, #a8e063);"><a asp-action="" asp-controller="">aa</a></div>
-                <div class="col d-flex align-items-center justify-content-center" style="background: linear-gradient(to right, #00c3ff, #ffff1c);"><a asp-controller="" asp-action="">bb</a></div>
-                <div class="w-100"></div>
-                <div class="col d-flex align-items-center justify-content-center" style="background: linear-gradient(to right, #00c3ff, #ffff1c);"><a asp-controller="" asp-action="">bb</a></div>
-                <div class="col d-flex align-items-center justify-content-center" style="background: linear-gradient(to right, #00c3ff, #ffff1c);"><a asp-controller="" asp-action="">bb</a></div>
+    <div class="container-fluid h-100" style="background: linear-gradient(-135deg, #c850c0, #4158d0)">
+        <div class="container h-100">
+            <div class="row align-items-center h-100 text-center">
+                <div class="col mx-auto h-25">
+                    <a asp-action="Hours" asp-controller="User" class="underline-text">
+                        <div class="card card-body h-100" id="cardOne" style="background-color:#512b58">
+                            <span class="my-auto text-white display-4">Add hours</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col mx-auto h-25">
+                    <a asp-action="List" asp-controller="User" class="underline-text">
+                        <div class="card card-body h-100" id="cardTwo" style="background-color:#ffa41b">
+                            <span class="my-auto text-white display-4">List hours</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col mx-auto h-25">
+                    <a href="#" class="underline-text">
+                        <div class="card card-body h-100" id="cardThree" style="background-color:#ff5151">
+                            <span class="my-auto text-white display-4">Logout</span>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
