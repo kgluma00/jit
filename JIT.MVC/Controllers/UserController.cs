@@ -158,6 +158,7 @@ namespace JIT.MVC.Controllers
         public async Task<IActionResult> CreatePDF(ExportDatesViewModel model)
         {
             var user = this.User.Claims.ToList();
+            var getUserById = await _jitService.GetUserById(Convert.ToInt32(user[1].Value));
             var getAllProjectsByUser = await _jitService.GetAllProjectsBetweenDates(Convert.ToInt32(user[1].Value), model.StartDate, model.EndDate);
             var projectsForPDFCreation = _mapper.Map<ICollection<ProjectDto>, ICollection<ProjectViewModel>>(getAllProjectsByUser);
 
@@ -173,14 +174,13 @@ namespace JIT.MVC.Controllers
             //if we want to save it on our hard disk
             //Out = @"E:\Employee_Report.pdf"
 
-
             var objectSettings = new ObjectSettings
             {
                 PagesCount = true,
-                HtmlContent = TemplateGenerator.GetHTMLString(projectsForPDFCreation),
+                HtmlContent = TemplateGenerator.GetHTMLString(projectsForPDFCreation,getUserById.Username),
                 WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "Helpers", "pdf-generator.css") },
                 HeaderSettings = { FontName = "Arial", FontSize = 9, Right = "Page [page] of [toPage]", Line = true },
-                FooterSettings = { FontName = "Arial", FontSize = 9, Line = true, Center = "Report Footer" }
+                FooterSettings = { FontName = "Arial", FontSize = 9, Line = true, Center = "Tech Resources d.o.o." }
             };
 
             var pdf = new HtmlToPdfDocument()
