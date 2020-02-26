@@ -54,7 +54,7 @@ button.accept-policy {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
+  /*position: relative;*/
   min-height: 100%;
 }
 
