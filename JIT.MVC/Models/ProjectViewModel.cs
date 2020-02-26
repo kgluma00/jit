@@ -17,6 +17,6 @@ namespace JIT.MVC.Models
         public DateTime WorkingDate { get; set; }
         [Display(Name = "Working Hours")]
         public double WorkingHours { get; set; }
-        public ICollection<UserViewModel> User { get; set; }
+        public UserViewModel User { get; set; }
     }
 }

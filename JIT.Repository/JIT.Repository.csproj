@@ -11,6 +11,14 @@
     <Compile Remove="Migrations\20200122103752_ChangedUserIdProperty.Designer.cs" />
     <Compile Remove="Migrations\20200122104311_UserModel.cs" />
     <Compile Remove="Migrations\20200122104311_UserModel.Designer.cs" />
+    <Compile Remove="Migrations\20200226162744_RemoveProjectID.cs" />
+    <Compile Remove="Migrations\20200226162744_RemoveProjectID.Designer.cs" />
+    <Compile Remove="Migrations\20200226165509_ProjectIDRemoved.cs" />
+    <Compile Remove="Migrations\20200226165509_ProjectIDRemoved.Designer.cs" />
+    <Compile Remove="Migrations\20200226170027_ProjectIDRemoved.cs" />
+    <Compile Remove="Migrations\20200226170027_ProjectIDRemoved.Designer.cs" />
+    <Compile Remove="Migrations\20200226170120_ProjectIDRemoved.cs" />
+    <Compile Remove="Migrations\20200226170120_ProjectIDRemoved.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

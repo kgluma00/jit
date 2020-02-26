@@ -11,6 +11,6 @@ namespace JIT.Core.DTOs
         public string ProjectName { get; set; }
         public DateTime WorkingDate { get; set; }
         public double WorkingHours { get; set; }
-        public ICollection<UserDto> User { get; set; }
+        public UserDto User { get; set; }
     }
 }

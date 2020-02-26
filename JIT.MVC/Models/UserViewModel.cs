@@ -19,6 +19,6 @@ namespace JIT.MVC.Models
         public bool IsAdmin { get; set; }
         public bool isAuthenticated { get; set; }
 
-        public ProjectViewModel Project { get; set; }
+        public ICollection<ProjectViewModel> Project { get; set; }
     }
 }

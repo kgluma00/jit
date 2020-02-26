@@ -15,7 +15,6 @@ namespace JIT.Core.DTOs
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
         public bool isAuthenticated { get; set; }
-
-        public ProjectDto Project { get; set; }
+        public ICollection<ProjectDto> Projects { get; set; }
     }
 }

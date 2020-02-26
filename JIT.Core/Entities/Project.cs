@@ -18,6 +18,6 @@ namespace JIT.Core.Entities
         public DateTime WorkingDate { get; set; }
         [Required]
         public double WorkingHours { get; set; }
-        public ICollection<User> User { get; set; }
+        public User User { get; set; }
     }
 }

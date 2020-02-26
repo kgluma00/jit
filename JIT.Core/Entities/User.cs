@@ -23,7 +23,6 @@ namespace JIT.Core.Entities
         public bool IsAdmin { get; set; }
         [Required]
         public bool isAuthenticated { get; set; }
-        public Project Project { get; set; }
-
+        public ICollection<Project> Projects { get; set; }
     }
 }

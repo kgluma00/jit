@@ -27,7 +27,7 @@ namespace JIT.Repository
         public async Task<bool> DeleteProject(int id)
         {
             var projectToDelete = _context.Projects.Where(i => i.Id == id).SingleOrDefault();
-             _context.Projects.Remove(projectToDelete);
+            _context.Projects.Remove(projectToDelete);
             await _context.SaveChangesAsync();
             return true;
         }
@@ -57,7 +57,7 @@ namespace JIT.Repository
         {
             if (includeWorkingHours)
             {
-                return await _context.Users.Where(i => i.Id == id).Include(p => p.Project).FirstOrDefaultAsync();
+                //return await _context.Users.Where(i => i.Id == id).Include(p => p.Project).FirstOrDefaultAsync();
             }
 
             return await _context.Users.Where(i => i.Id == id).FirstOrDefaultAsync();
@@ -84,10 +84,10 @@ namespace JIT.Repository
             return project;
         }
 
-        public async void Update(User user)
+        public void Update(User user)
         {
             _context.Users.Update(user);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public async Task<bool> UserExists(string username)
