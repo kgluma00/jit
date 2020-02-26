@@ -46,10 +46,8 @@ namespace JIT.MVC
                 });
 
             services.AddControllersWithViews();
-
             //services.AddSingleton<AuthenticateUser>();
             services.Configure<EmailOptions>(Configuration.GetSection("EmailOptions"));
-
             //services.AddSingleton(Configuration);
 
             services.AddMvc()
@@ -64,6 +62,7 @@ namespace JIT.MVC
             });
             var mapper = config.CreateMapper();
             services.AddSingleton(mapper);
+            services.AddCloudscribePagination();
 
             services.AddRepositoriesCollection();
             services.AddBusinessServicesCollection();

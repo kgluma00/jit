@@ -1,4 +1,4 @@
-﻿@model IEnumerable<JIT.MVC.Models.ProjectViewModel>
+﻿@model cloudscribe.Pagination.Models.PagedResult<ProjectViewModel>
 
 @{
     Layout = null;
@@ -37,14 +37,14 @@
                     <table>
                         <thead>
                             <tr class="table100-head">
-                                <th class="column1">@Html.DisplayNameFor(model => model.ProjectName)</th>
-                                <th class="column2">@Html.DisplayNameFor(model => model.WorkingDate)</th>
-                                <th class="column3">@Html.DisplayNameFor(model => model.WorkingHours)</th>
+                                <th class="column1">Project Name</th>
+                                <th class="column2">Working Date</th>
+                                <th class="column3">Working Hours</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var item in Model.Data)
                             {
                                 <tr>
                                     <td class="column1">@Html.DisplayFor(modelItem => item.ProjectName)</td>
@@ -59,6 +59,20 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="row my-2">
+                <cs-pager cs-paging-pagenumber="(int)Model.PageNumber"
+                          cs-paging-totalitems="(int)Model.TotalItems"
+                          cs-paging-pagesize="(int)Model.PageSize"
+                          cs-pagenumber-param="pagenumber"
+                          asp-controller="User"
+                          asp-action="List"
+                          cs-pager-li-current-class="page-item active"
+                          cs-pager-li-other-class="page-item"
+                          cs-pager-li-non-active-class="page-item disabled"
+                          cs-pager-link-current-class="page-link"
+                          cs-pager-link-other-class="page-link">
+                </cs-pager>
             </div>
             <div class="mt-5 control-buttons">
                 <a class="btn btn-warning" style="margin:0 10px;" data-toggle="modal" data-target="#exampleModalCenter">

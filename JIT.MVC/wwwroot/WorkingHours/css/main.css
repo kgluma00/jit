@@ -348,3 +348,8 @@ tbody tr {
             margin: 0 1px;
         }
 }
+
+.page-item.active .page-link {
+    background: #512b58 !important;
+    border-color: #512b58 !important;
+}

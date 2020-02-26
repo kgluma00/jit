@@ -124,9 +124,9 @@ namespace JIT.Business.Services
             return await _jitRepository.SaveNewProject(_mapper.Map<ProjectDto, Project>(project));
         }
 
-        public async Task<ICollection<ProjectDto>> GetAllProjectsByUserId(int userId)
+        public async Task<ICollection<ProjectDto>> GetAllProjectsInRangeByUserId(int userId, int pageNumber, int pageSize)
         {
-            var projectsFromDb = await _jitRepository.GetAllProjectsByUserId(userId);
+            var projectsFromDb = await _jitRepository.GetAllProjectsInRangeByUserId(userId, pageNumber, pageSize);
 
             return _mapper.Map<ICollection<Project>, ICollection<ProjectDto>>(projectsFromDb);
         }
@@ -165,7 +165,14 @@ namespace JIT.Business.Services
 
         public async Task<bool> DeleteProject(int id)
         {
-           return await _jitRepository.DeleteProject(id);
+            return await _jitRepository.DeleteProject(id);
+        }
+
+        public async Task<ICollection<ProjectDto>> GetAllProjectsByUserId(int userId)
+        {
+            var projectsFromDb = await _jitRepository.GetAllProjectsByUserId(userId);
+
+            return _mapper.Map<ICollection<Project>, ICollection<ProjectDto>>(projectsFromDb);
         }
     }
 }

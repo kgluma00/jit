@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using cloudscribe.Pagination.Models;
 using DinkToPdf;
 using DinkToPdf.Contracts;
 using JIT.Business.Interfaces;
@@ -129,12 +130,23 @@ namespace JIT.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(int pageNumber = 1, int pageSize = 10)
         {
             var user = this.User.Claims.ToList();
-            var projectsFromDb = await _jitService.GetAllProjectsByUserId(Convert.ToInt32(user[1].Value));
 
-            return View(_mapper.Map<ICollection<ProjectDto>, ICollection<ProjectViewModel>>(projectsFromDb));
+
+            var projectsFromDbInRange = await _jitService.GetAllProjectsInRangeByUserId(Convert.ToInt32(user[1].Value), pageNumber, pageSize);
+            var allProjectsFromDbByUser = await _jitService.GetAllProjectsByUserId(Convert.ToInt32(user[1].Value));
+
+            var result = new PagedResult<ProjectViewModel>
+            {
+                Data = _mapper.Map<ICollection<ProjectDto>, ICollection<ProjectViewModel>>(projectsFromDbInRange).ToList(),
+                TotalItems = allProjectsFromDbByUser.Count(),
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            return View(result);
         }
 
         [HttpGet]
@@ -177,7 +189,7 @@ namespace JIT.MVC.Controllers
             var objectSettings = new ObjectSettings
             {
                 PagesCount = true,
-                HtmlContent = TemplateGenerator.GetHTMLString(projectsForPDFCreation,getUserById.Username),
+                HtmlContent = TemplateGenerator.GetHTMLString(projectsForPDFCreation, getUserById.Username),
                 WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "Helpers", "pdf-generator.css") },
                 HeaderSettings = { FontName = "Arial", FontSize = 9, Right = "Page [page] of [toPage]", Line = true },
                 FooterSettings = { FontName = "Arial", FontSize = 9, Line = true, Center = "Tech Resources d.o.o." }
