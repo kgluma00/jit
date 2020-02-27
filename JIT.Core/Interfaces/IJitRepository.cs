@@ -13,7 +13,7 @@ namespace JIT.Core.Interfaces
         Task<User> GetUserByUsername(string username);
         Task<User> Register(User user);
         Task<bool> UserExists(string username);
-        Task<ICollection<Project>> GetAllProjectsInRangeByUserId(int userId, int pageNumber, int pageSize);
+        //Task<ICollection<Project>> GetAllProjectsInRangeByUserId(ICollection<Project> projects, int pageNumber, int pageSize);
         Task<ICollection<Project>> GetAllProjectsByUserId(int userId);
         Task<ICollection<Project>> GetAllProjectsBetweenDates(int userId, DateTime startDate, DateTime endDate);
         Task<bool> DeleteProject(int id);

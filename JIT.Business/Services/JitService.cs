@@ -5,6 +5,7 @@ using JIT.Core.Entities;
 using JIT.Core.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -124,11 +125,27 @@ namespace JIT.Business.Services
             return await _jitRepository.SaveNewProject(_mapper.Map<ProjectDto, Project>(project));
         }
 
-        public async Task<ICollection<ProjectDto>> GetAllProjectsInRangeByUserId(int userId, int pageNumber, int pageSize)
+        public async Task<ICollection<ProjectDto>> GetAllProjectsInRangeByUserId(int userId, int pageNumber, int pageSize, string sortOrder)
         {
-            var projectsFromDb = await _jitRepository.GetAllProjectsInRangeByUserId(userId, pageNumber, pageSize);
+            int excludeRecords = (pageSize * pageNumber) - pageSize;
 
-            return _mapper.Map<ICollection<Project>, ICollection<ProjectDto>>(projectsFromDb);
+            var allProjectsFromDb = await _jitRepository.GetAllProjectsByUserId(userId);
+
+            switch (sortOrder)
+            {
+                case "date_desc":
+                    allProjectsFromDb = allProjectsFromDb.OrderByDescending(w => w.WorkingDate).ToList();
+                    break;
+                default:
+                    allProjectsFromDb = allProjectsFromDb.OrderBy(w => w.WorkingDate).ToList();
+                    break;
+            }
+
+            //var projectsFromDb = await _jitRepository.GetAllProjectsInRangeByUserId(allProjectsFromDb, pageNumber, pageSize);
+
+            var projectsFromDb = allProjectsFromDb.Skip(excludeRecords).Take(pageSize);
+
+            return _mapper.Map<ICollection<Project>, ICollection<ProjectDto>>(projectsFromDb.ToList());
         }
 
         public async Task<ICollection<ProjectDto>> GetAllProjectsBetweenDates(int userId, DateTime startDate, DateTime endDate)

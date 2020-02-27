@@ -38,7 +38,11 @@
                         <thead>
                             <tr class="table100-head">
                                 <th class="column1">Project Name</th>
-                                <th class="column2">Working Date</th>
+                                <th class="column2">
+                                    <a class="text-white" asp-action="List" asp-route-pageNumber="@Model.PageNumber"
+                                       asp-controller="User"
+                                       asp-route-sortOrder="@ViewBag.DateSortParam">Working Date</a>
+                                </th>
                                 <th class="column3">Working Hours</th>
                                 <th></th>
                             </tr>
@@ -65,6 +69,7 @@
                           cs-paging-totalitems="(int)Model.TotalItems"
                           cs-paging-pagesize="(int)Model.PageSize"
                           cs-pagenumber-param="pagenumber"
+                          asp-route-sortOrder="@ViewBag.CurrentSortOrder"
                           asp-controller="User"
                           asp-action="List"
                           cs-pager-li-current-class="page-item active"

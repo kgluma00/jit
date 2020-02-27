@@ -42,11 +42,12 @@ namespace JIT.Repository
             return await _context.Projects.Where(i => i.UserId == userId).OrderByDescending(i => i.WorkingDate).ToListAsync();
         }
 
-        public async Task<ICollection<Project>> GetAllProjectsInRangeByUserId(int userId, int pageNumber, int pageSize)
-        {
-            int excludeRecords = (pageSize * pageNumber) - pageSize;
-            return await _context.Projects.Where(i => i.UserId == userId).Skip(excludeRecords).Take(pageSize).OrderByDescending(i => i.WorkingDate).ToListAsync();
-        }
+        //public  Task<ICollection<Project>> GetAllProjectsInRangeByUserId(ICollection<Project> projects,int pageNumber, int pageSize)
+        //{
+        //    int excludeRecords = (pageSize * pageNumber) - pageSize;
+
+        //    return projects.Skip(excludeRecords).Take(pageSize);
+        //}
 
         public async Task<ICollection<User>> GetAllUsers()
         {

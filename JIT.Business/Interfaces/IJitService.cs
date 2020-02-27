@@ -10,7 +10,7 @@ namespace JIT.Business.Interfaces
    public interface IJitService
     {
         Task<ICollection<UserDto>> GetAllUsers();
-        Task<ICollection<ProjectDto>> GetAllProjectsInRangeByUserId(int userId, int pageNumber, int pageSize);
+        Task<ICollection<ProjectDto>> GetAllProjectsInRangeByUserId(int userId, int pageNumber, int pageSize, string sortOrder);
         Task<ICollection<ProjectDto>> GetAllProjectsByUserId(int userId);
 
         Task<ICollection<ProjectDto>> GetAllProjectsBetweenDates(int userId, DateTime startDate, DateTime endDate);

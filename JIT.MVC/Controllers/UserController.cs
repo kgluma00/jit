@@ -130,12 +130,13 @@ namespace JIT.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> List(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> List(string sortOrder, int pageNumber = 1, int pageSize = 10)
         {
+            ViewBag.CurrentSortOrder = sortOrder;
+            ViewBag.DateSortParam = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
             var user = this.User.Claims.ToList();
 
-
-            var projectsFromDbInRange = await _jitService.GetAllProjectsInRangeByUserId(Convert.ToInt32(user[1].Value), pageNumber, pageSize);
+            var projectsFromDbInRange = await _jitService.GetAllProjectsInRangeByUserId(Convert.ToInt32(user[1].Value), pageNumber, pageSize, sortOrder);
             var allProjectsFromDbByUser = await _jitService.GetAllProjectsByUserId(Convert.ToInt32(user[1].Value));
 
             var result = new PagedResult<ProjectViewModel>
