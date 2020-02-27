@@ -24,7 +24,7 @@ namespace JIT.MVC.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IJitService _jitService;
-        private IConverter _converter;
+        private readonly IConverter _converter;
         private readonly IOptions<EmailOptions> _emailOptions;
 
         public UserController(IMapper mapper, IJitService jitService, IConverter converter, IOptions<EmailOptions> emailOptions)
@@ -55,7 +55,7 @@ namespace JIT.MVC.Controllers
                 return View("Login");
             }
 
-            if (!loggedUser.isAuthenticated)
+            if (!loggedUser.IsAuthenticated)
             {
                 //doraditi ovo
                 ModelState.AddModelError("Authenticate", "That user is not authenticated");

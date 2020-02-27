@@ -39,11 +39,9 @@ namespace JIT.Business.Services
 
         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
+            using var hmac = new System.Security.Cryptography.HMACSHA512();
+            passwordSalt = hmac.Key;
+            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         }
 
         public async Task<bool> UserExists(UserDto user)
@@ -88,14 +86,14 @@ namespace JIT.Business.Services
             if (!VerifyPasswordHash(userPassword, userFromDb.PasswordHash, userFromDb.PasswordSalt)) return null;
 
             user.Id = userFromDb.Id;
-            user.isAuthenticated = userFromDb.isAuthenticated;
+            user.IsAuthenticated = userFromDb.IsAuthenticated;
 
             return user;
         }
 
         public async Task<UserDto> Register(UserDto user, string secretApiKey)
         {
-            byte[] passwordHash, passwordSalt = { 0 };
+            byte[] passwordHash = { 0 }, passwordSalt = { 0 };
 
             //saljemo referencu (pokazivac)
             CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
@@ -131,15 +129,11 @@ namespace JIT.Business.Services
 
             var allProjectsFromDb = await _jitRepository.GetAllProjectsByUserId(userId);
 
-            switch (sortOrder)
+            allProjectsFromDb = sortOrder switch
             {
-                case "date_desc":
-                    allProjectsFromDb = allProjectsFromDb.OrderByDescending(w => w.WorkingDate).ToList();
-                    break;
-                default:
-                    allProjectsFromDb = allProjectsFromDb.OrderBy(w => w.WorkingDate).ToList();
-                    break;
-            }
+                "date_desc" => allProjectsFromDb.OrderByDescending(w => w.WorkingDate).ToList(),
+                _ => allProjectsFromDb.OrderBy(w => w.WorkingDate).ToList(),
+            };
 
             //var projectsFromDb = await _jitRepository.GetAllProjectsInRangeByUserId(allProjectsFromDb, pageNumber, pageSize);
 
@@ -160,7 +154,7 @@ namespace JIT.Business.Services
             var userFromDb = await _jitRepository.GetUserById(id);
             if (userFromDb == null) return false;
 
-            userFromDb.isAuthenticated = true;
+            userFromDb.IsAuthenticated = true;
 
             _jitRepository.Update(userFromDb);
 
@@ -172,7 +166,7 @@ namespace JIT.Business.Services
             var userFromDb = await GetUserById(id);
             if (userFromDb != null)
             {
-                userFromDb.isAuthenticated = true;
+                userFromDb.IsAuthenticated = true;
                 _jitRepository.Update(_mapper.Map<UserDto, User>(userFromDb));
                 return true;
             }
