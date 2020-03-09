@@ -54,6 +54,11 @@ namespace JIT.Repository
             return await _context.Users.ToListAsync();
         }
 
+        public async Task<Project> GetProjectById(int id)
+        {
+            return await _context.Projects.Where(i => i.Id == id).SingleOrDefaultAsync();
+        }
+
         public async Task<User> GetUserById(int id, bool includeWorkingHours = false)
         {
             if (includeWorkingHours)
@@ -89,6 +94,13 @@ namespace JIT.Repository
         {
             _context.Users.Update(user);
             _context.SaveChanges();
+        }
+
+        public async Task<bool> UpdateProject(Project project)
+        {
+            _context.Projects.Update(project);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> UserExists(string username)

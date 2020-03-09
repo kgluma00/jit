@@ -1,0 +1,102 @@
+﻿@model JIT.MVC.Models.ProjectViewModel
+
+@{
+}
+
+<div class="container h-100">
+    <div class="row justify-content-center align-items-center h-100">
+        <div class="card card-outline-secondary w-75">
+            <div class="card-header">
+                <h3 class="mb-0">Add your hours</h3>
+            </div>
+            <div class="card-body">
+                <form class="form" role="form" autocomplete="off" asp-action="EditHours">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label" asp-for="ProjectName"></label>
+                        <div class="col-lg-9">
+                            <input class="form-control" id="ProjectName" type="text" asp-for="ProjectName">
+                        </div>
+                        <span asp-validation-for="ProjectName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label" asp-for="WorkingDate"></label>
+                        <div class="col-lg-9">
+                            <input class="form-control" id="WorkingDate" asp-for="WorkingDate">
+                        </div>
+                        <span asp-validation-for="WorkingDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label" asp-for="WorkingHours"></label>
+                        <div class="col-lg-9">
+                            <input class="form-control" id="WorkingHours" asp-for="WorkingHours">
+                            <span asp-validation-for="WorkingHours" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label"></label>
+                        <div class="col-lg-9">
+                            <a onclick="editHours(@Model.Id)" class="btn text-white" style="background: #512b58;">Update</a>
+                            <a class="btn text-white" asp-controller="Home" asp-action="Index" style="background: #ff5151;">Back</a>
+                        </div>
+                        <input hidden asp-for="UserId" value="@ViewData["UserId"]" class="form-control" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+        function editHours(id) {
+            console.log(id);
+            var projectName = document.getElementById("ProjectName").value;
+            var workingDate = document.getElementById("WorkingDate").value;
+            var workingHours = document.getElementById("WorkingHours").value;
+
+            var projectViewModel =
+            {
+                "id": id,
+                "projectName": projectName,
+                "workingDate" : workingDate,
+                "workingHours": workingHours,
+            };
+
+            //var json = JSON.stringify(projectViewModel);
+            console.log(projectViewModel);
+
+
+    $.ajax({
+        url: '@Url.Action("EditHours","User")',
+        type: "POST",
+        data: projectViewModel,
+        success: function(data) {
+            if (data === true) {
+                swal({
+                    title: "Good job!",
+                    text: "Record has been updated",
+                    icon: "success",
+                    button: "Close",
+                }).then((value) => {
+                    var url = '@Url.Action("Index", "Home")';
+                      location.href = url;
+                });
+
+            } else {
+                swal({
+                    title: "Error",
+                    text: "Something went wrong!",
+                    icon: "error",
+                    button: "Close",
+                })
+                return false;
+            }
+        }
+    });
+        }
+
+    </script>
+}

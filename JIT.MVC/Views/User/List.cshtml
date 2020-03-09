@@ -55,7 +55,7 @@
                                     <td class="column2">@Html.DisplayFor(modelItem => item.WorkingDate)</td>
                                     <td class="column3">@Html.DisplayFor(modelItem => item.WorkingHours)</td>
                                     <td class="column6">
-                                        <a class="btn text-white" style="background: #512b58;">Edit</a>
+                                        <a class="btn text-white" style="background: #512b58;" asp-action="EditHours" asp-route-id="@item.Id">Edit</a>
                                         <a class="btn text-white" style="background: #ff5151;" onclick="deleteHours(@item.Id)">Delete</a>
                                     </td>
                                 </tr>

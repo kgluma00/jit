@@ -130,6 +130,26 @@ namespace JIT.MVC.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> EditHours(int id)
+        {
+            var project = await _jitService.GetProjectById(id);
+
+            var projectViewModel = _mapper.Map<ProjectDto, ProjectViewModel>(project);
+
+            return View(projectViewModel);
+        }
+
+        [HttpPost]
+        public async Task<bool> EditHours(ProjectViewModel model)
+        {
+            var updatedProject = await _jitService.UpdateProject(_mapper.Map<ProjectViewModel,ProjectDto>(model));
+
+            return updatedProject;
+        }
+
+
+
+        [HttpGet]
         public async Task<IActionResult> List(string sortOrder, int pageNumber = 1, int pageSize = 10)
         {
             ViewBag.CurrentSortOrder = sortOrder;

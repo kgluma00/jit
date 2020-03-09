@@ -10,6 +10,7 @@ namespace JIT.Core.Interfaces
     {
         Task<ICollection<User>> GetAllUsers();
         Task<User> GetUserById(int id, bool includeWorkingHours = false);
+        Task<Project> GetProjectById(int id);
         Task<User> GetUserByUsername(string username);
         Task<User> Register(User user);
         Task<bool> UserExists(string username);
@@ -18,6 +19,7 @@ namespace JIT.Core.Interfaces
         Task<ICollection<Project>> GetAllProjectsBetweenDates(int userId, DateTime startDate, DateTime endDate);
         Task<bool> DeleteProject(int id);
         void Update(User user);
+        Task<bool> UpdateProject(Project project);
         void Delete(User user);
         Task<Project> SaveNewProject(Project project);
     }

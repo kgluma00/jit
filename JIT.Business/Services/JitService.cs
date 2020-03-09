@@ -185,5 +185,23 @@ namespace JIT.Business.Services
 
             return _mapper.Map<ICollection<Project>, ICollection<ProjectDto>>(projectsFromDb);
         }
+
+        public async Task<ProjectDto> GetProjectById(int id)
+        {
+            var projectFromDb = await _jitRepository.GetProjectById(id);
+
+            return _mapper.Map<Project, ProjectDto>(projectFromDb);
+        }
+
+        public async Task<bool> UpdateProject(ProjectDto project)
+        {
+            var projectToBeUpdated = await _jitRepository.GetProjectById(project.Id);
+
+            projectToBeUpdated.ProjectName = project.ProjectName;
+            projectToBeUpdated.WorkingDate = project.WorkingDate;
+            projectToBeUpdated.WorkingHours = project.WorkingHours;
+
+            return await _jitRepository.UpdateProject(projectToBeUpdated);
+        }
     }
 }
