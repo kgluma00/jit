@@ -43,7 +43,7 @@ namespace JIT.MVC.Helpers
 									<td>{0}</td>
 									<td>{1}</td>
 									<td>{2}</td>
-								  </tr>", element.ProjectName, element.WorkingDate, element.WorkingHours);
+								  </tr>", element.ProjectName, element.WorkingDate.ToString("dd/MM/yyyy"), element.WorkingHours);
 			}
 
 			sb.Append($@"
