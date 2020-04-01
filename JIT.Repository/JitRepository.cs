@@ -34,7 +34,7 @@ namespace JIT.Repository
 
         public async Task<ICollection<Project>> GetAllProjectsBetweenDates(int userId, DateTime startDate, DateTime endDate)
         {
-            return await _context.Projects.Where(p => p.UserId == userId && p.WorkingDate >= startDate && p.WorkingDate < endDate).ToListAsync();
+            return await _context.Projects.Where(p => p.UserId == userId && p.WorkingDate >= startDate && p.WorkingDate <= endDate).ToListAsync();
         }
 
         public async Task<ICollection<Project>> GetAllProjectsByUserId(int userId)
